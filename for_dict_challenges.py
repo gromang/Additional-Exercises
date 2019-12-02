@@ -7,12 +7,18 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Петя'},
 ]
-stud_list = []
-for line in students:
-    stud_list.append(line['first_name'])
-for name in set(stud_list):
-    print(f'{name} : {stud_list.count(name)}')
+# Функция stud_counter() возвращает словарь с именами и числом их повторений
+def stud_counter(students):
+    stud_list=[]
+    result = {}
+    for list_items in students:
+        stud_list.append(list_items.get('first_name',''))
+    for name in set(stud_list):
+        result[name] = stud_list.count(name)
+    return result
 
+for name,count in stud_counter(students).items():
+    print(f'{name} : {count}')
 
 # Пример вывода:
 # Вася: 1
@@ -29,16 +35,15 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Оля'},
 ]
-stud_list = []
-for line in students:
-    stud_list.append(line['first_name'])
-max_stud = 0
-for name in set(stud_list):
-    if stud_list.count(name) > max_stud:
-        max_stud = stud_list.count(name)
-        stud_name = name
+def main_name(students):
+    max_stud = 0
+    for name, count in stud_counter(students).items():
+        if count > max_stud:
+            max_stud = count
+            stud_name = name
+    return stud_name
 
-print(f'Самое частое имя среди учеников: {stud_name}')
+print(f'Самое частое имя среди учеников: {main_name(students)}')
 
 
 # Пример вывода:
@@ -57,7 +62,9 @@ school_students = [
         {'first_name': 'Оля'},
     ]
 ]
-# ???
+
+for i in range(len(school_students)):
+    print(f'Самое частое имя в классе {i+1}: {main_name(school_students[i])}')
 
 # Пример вывода:
 # Самое частое имя в классе 1: Вася
@@ -78,7 +85,26 @@ is_male = {
     'Олег': True,
     'Миша': True,
 }
-# ???
+def new_counter(school_list,is_male_dict):
+    new_school_list=[]
+    for class_n in school_list:
+        boys = 0
+        girls = 0
+        for stud in class_n['students']:
+            stud_name = stud.get('first_name')
+            if is_male_dict[stud_name]:
+                boys +=1
+            else:
+                girls +=1
+        new_school_list.append({'class':class_n['class'],'boys':boys, 'girls':girls})
+    return new_school_list
+
+for cl in new_counter(school,is_male):
+    print(cl.get('class'))
+    #print(f'В классе {cl.get('class')} : {cl.get('boys')} мальчиков и {cl.get('girls')} девочек')
+
+    
+        
 
 # Пример вывода:
 # В классе 2a 2 девочки и 0 мальчика.
