@@ -8,16 +8,19 @@ students = [
     {'first_name': 'Петя'},
 ]
 # Функция stud_counter() возвращает словарь с именами и числом их повторений
+
+
 def stud_counter(students):
-    stud_list=[]
+    stud_list = []
     result = {}
     for list_items in students:
-        stud_list.append(list_items.get('first_name',''))
+        stud_list.append(list_items.get('first_name', ''))
     for name in set(stud_list):
         result[name] = stud_list.count(name)
     return result
 
-for name,count in stud_counter(students).items():
+
+for name, count in stud_counter(students).items():
     print(f'{name} : {count}')
 
 # Пример вывода:
@@ -35,6 +38,8 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Оля'},
 ]
+
+
 def main_name(students):
     max_stud = 0
     for name, count in stud_counter(students).items():
@@ -42,6 +47,7 @@ def main_name(students):
             max_stud = count
             stud_name = name
     return stud_name
+
 
 print(f'Самое частое имя среди учеников: {main_name(students)}')
 
@@ -85,26 +91,35 @@ is_male = {
     'Олег': True,
     'Миша': True,
 }
-def new_counter(school_list,is_male_dict):
-    new_school_list=[]
+
+# Данная функция возвращает новый список с информацией о колличестве мальчиков
+# и девочек в каждом классе
+
+
+def new_counter(school_list, is_male_dict):
+    new_school_list = []
     for class_n in school_list:
         boys = 0
         girls = 0
         for stud in class_n['students']:
             stud_name = stud.get('first_name')
             if is_male_dict[stud_name]:
-                boys +=1
+                boys += 1
             else:
-                girls +=1
-        new_school_list.append({'class':class_n['class'],'boys':boys, 'girls':girls})
+                girls += 1
+        new_school_list.append(
+            {'class': class_n['class'], 'boys': boys, 'girls': girls})
     return new_school_list
 
-for cl in new_counter(school,is_male):
-    print(cl.get('class'))
-    #print(f'В классе {cl.get('class')} : {cl.get('boys')} мальчиков и {cl.get('girls')} девочек')
 
-    
-        
+for cl in new_counter(school, is_male):
+    # не работает :
+    # print(f'В классе {cl.get('class')} : {cl.get('boys')} мальчиков и {cl.get('girls')} девочек')
+    class_name = cl.get('class')
+    boys_num = cl.get('boys')
+    girls_num = cl.get('girls')
+    print(f'В классе {class_name}: {boys_num} мальчиков и {girls_num} девочек')
+
 
 # Пример вывода:
 # В классе 2a 2 девочки и 0 мальчика.
@@ -125,7 +140,23 @@ is_male = {
     'Олег': True,
     'Миша': True,
 }
-# ???
+
+boys = 0
+girls = 0
+for cl in new_counter(school, is_male):
+
+    class_name = cl.get('class')
+    boys_num = cl.get('boys')
+    girls_num = cl.get('girls')
+    if boys_num > boys:
+        boys += boys_num
+        boys_class = class_name
+    if girls_num > girls:
+        girls += girls_num
+        girls_class = class_name
+
+print(f'Больше всего мальчиков в классе {boys_class}')
+print(f'Больше всего девочек в классе {girls_class}')
 
 # Пример вывода:
 # Больше всего мальчиков в классе 3c
